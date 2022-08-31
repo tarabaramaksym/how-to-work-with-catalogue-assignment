@@ -26,7 +26,6 @@ use Magento\InventoryApi\Api\Data\SourceItemInterface;
 
 class CreateTestSimpleProduct implements DataPatchInterface
 {
-
     /**
      * @var ProductInterfaceFactory
      */
