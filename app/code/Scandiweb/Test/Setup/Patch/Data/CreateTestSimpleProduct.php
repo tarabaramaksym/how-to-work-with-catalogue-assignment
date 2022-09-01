@@ -13,16 +13,15 @@ use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Framework\App\State;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\InventoryApi\Api\Data\SourceItemInterfaceFactory;
+use Magento\InventoryApi\Api\SourceItemsSaveInterface;
+use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Validation\ValidationException;
-use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\InventoryApi\Api\Data\SourceItemInterfaceFactory;
-use Magento\InventoryApi\Api\SourceItemsSaveInterface;
-use Magento\InventoryApi\Api\Data\SourceItemInterface;
-
 
 class CreateTestSimpleProduct implements DataPatchInterface
 {
@@ -76,13 +75,13 @@ class CreateTestSimpleProduct implements DataPatchInterface
      * @param SourceItemsSaveInterface $sourceItemsSaveInterface
      */
     public function __construct(
-        ProductInterfaceFactory         $productInterfaceFactory,
-        ProductRepositoryInterface      $productRepository,
-        State                           $appState,
-        EavSetup                        $eavSetup,
+        ProductInterfaceFactory $productInterfaceFactory,
+        ProductRepositoryInterface $productRepository,
+        State $appState,
+        EavSetup $eavSetup,
         CategoryLinkManagementInterface $categoryLink,
-        SourceItemInterfaceFactory      $sourceItemFactory,
-        SourceItemsSaveInterface        $sourceItemsSaveInterface
+        SourceItemInterfaceFactory $sourceItemFactory,
+        SourceItemsSaveInterface $sourceItemsSaveInterface
     ) {
         $this->productInterfaceFactory = $productInterfaceFactory;
         $this->productRepository = $productRepository;
@@ -117,7 +116,7 @@ class CreateTestSimpleProduct implements DataPatchInterface
             // if element is found nothing happens
             // otherwise, throws exception and adds product
             $this->productRepository->get('simple-test-product');
-        } catch (NoSuchEntityException) {
+        } catch (NoSuchEntityException $e) {
             $product = $this->productInterfaceFactory->create();
             $attributeSetId = $this->eavSetup->getAttributeSetId(Product::ENTITY, 'Default');
 
